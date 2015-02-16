@@ -9,6 +9,8 @@ package ist311round2;
  *
  * @author nml5182
  */
+
+import java.util.*;
 public class NewClass {
     
 }
