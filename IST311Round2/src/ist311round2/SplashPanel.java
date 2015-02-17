@@ -20,7 +20,8 @@ public class SplashPanel extends JPanel {
 
     JLabel title;
 
-    private JLabel picture = new JLabel("TEST");
+    private JLabel picture = new JLabel();
+    private JLabel welcome = new JLabel("Welcome!");
     private ImageIcon theSplashImage;
     MainFrame parentMainFrame;
     
@@ -29,17 +30,11 @@ public class SplashPanel extends JPanel {
     public SplashPanel(MainFrame newMainFrame) {
      
      parentMainFrame = newMainFrame;
-     
      theSplashImage = new ImageIcon(this.getClass().getResource("image.gif"));
-     //System.out.println(this.getClass().getResource("splash.jpg"));       
-
-    }
-
-    @Override
-   public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        System.out.println("test");
-        g.drawImage(theSplashImage.getImage(),0,0,null);
+     picture.setIcon(theSplashImage);
+     theSplashImage.setImageObserver(picture);
+     //System.out.println(this.getClass().getResource("splash.jpg"));    
+     this.add(welcome);
+     this.add(picture);
     }
 }
