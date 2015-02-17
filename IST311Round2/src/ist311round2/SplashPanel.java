@@ -22,22 +22,24 @@ public class SplashPanel extends JPanel {
 
     private JLabel picture = new JLabel("TEST");
     private ImageIcon theSplashImage;
+    MainFrame parentMainFrame;
     
   
 
-    public SplashPanel() {
-         
-     theSplashImage = new ImageIcon(this.getClass().getResource("splash.jpg"));
-
-       
-            
+    public SplashPanel(MainFrame newMainFrame) {
+     
+     parentMainFrame = newMainFrame;
+     
+     theSplashImage = new ImageIcon(this.getClass().getResource("image.gif"));
+     //System.out.println(this.getClass().getResource("splash.jpg"));       
 
     }
 
     @Override
    public void paintComponent(Graphics g)
     {
-        
+        super.paintComponent(g);
+        System.out.println("test");
         g.drawImage(theSplashImage.getImage(),0,0,null);
     }
 }
