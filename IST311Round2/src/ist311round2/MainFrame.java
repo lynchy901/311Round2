@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ist311round2;
+
 
 /**
  *
@@ -11,6 +11,16 @@ package ist311round2;
  */
 
 import java.util.*;
-public class MainFrame {
-    
+import javax.swing.JFrame;
+public class MainFrame extends JFrame
+{
+    public MainFrame()
+    {
+        SplashPanel theSplashUI = new SplashPanel();
+        this.add(theSplashUI);
+        this.setSize(640, 480);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        this.setVisible(true);
+    }
 }
