@@ -22,7 +22,9 @@ public class MainMenu extends JPanel {
     //start game button,
     private JButton startButton;
     private JComboBox difficulty;
+    private JComboBox gridSize;
     private JLabel picture;
+    private String[] gridOption = {"4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"};
     private String[] difficulties = {"Easy", "Medium", "Hard"};
     private MainFrame parentMainFrame;
     
@@ -37,8 +39,10 @@ public class MainMenu extends JPanel {
         //this.setLayout(new GridLayout(2, 0));
         startButton = new JButton("Start");
         difficulty = new JComboBox(difficulties);
+        gridSize = new JComboBox(gridOption);
         this.add(startButton);
         this.add(difficulty);
+        this.add(gridSize);
         this.setLocation(0, 0);
         this.setPreferredSize(new Dimension(200, 200));
         revalidate();
@@ -55,6 +59,7 @@ public class MainMenu extends JPanel {
     public void theStartButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         parentMainFrame.showGameUI();
+        parentMainFrame.showGameGrid(gridOption[gridSize.getSelectedIndex()]);
         
     }
 }

@@ -15,16 +15,16 @@ import javax.swing.*;
 public class GamePanel extends JPanel {
     
     private MainFrame parentMainFrame;
+    JButton stopButton = new JButton("Stop");
     
     public GamePanel(MainFrame newMainFrame) {
         parentMainFrame = newMainFrame;
-        
+        this.setSize(900, 900);
         initComponents();
     }
     
     public void initComponents() {
         this.setVisible(true);
-        
-        this.setBackground(Color.yellow);
+        this.add(stopButton);
     }
 }

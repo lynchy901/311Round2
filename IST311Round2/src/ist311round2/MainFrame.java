@@ -10,6 +10,9 @@
  * @author nml5182
  */
 
+import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.JFrame;
 public class MainFrame extends JFrame
@@ -25,7 +28,9 @@ public class MainFrame extends JFrame
     
     public void showSplashUI() {
         
-        
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.setLayout(new BorderLayout());
         theSplashUI = new SplashPanel(this);
         this.add(theSplashUI);
         this.setSize(450, 350);
@@ -40,6 +45,8 @@ public class MainFrame extends JFrame
         }
         theSplashUI.setVisible(false);
         
+        
+        
     }
     
     public void showMainMenuUI() {
@@ -50,8 +57,64 @@ public class MainFrame extends JFrame
     
     public void showGameUI() {
         GamePanel theGamePanel = new GamePanel(this);
-        this.getContentPane().add(theGamePanel);
+        this.getContentPane().add(theGamePanel, "North");
         pack();
+    }
+    
+    public void showGameGrid(String grid) {
+        int gridSize = 0;
+        
+        if (grid == "4x4" ) {
+            gridSize = 4;
+        } else if (grid == "5x5") {
+            gridSize = 5;
+        } else if (grid == "6x6") {
+            gridSize = 6;
+        } else if (grid == "7x7") {
+            gridSize = 7;
+        } else if (grid == "8x8") {
+            gridSize = 8;
+        } else if (grid == "9x9") {
+            gridSize = 9;
+        } else if (grid == "10x10") {
+            gridSize = 10;
+        }
+        
+        ButtonArray theGameGrid = new ButtonArray(gridSize);
+        this.getContentPane().add(theGameGrid);
+        this.setSize(900, 900);
+        this.setLocationRelativeTo(null);
+        
+        this.addKeyListener(new KeyListener() {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == 38) {
+                //up
+                 theGameGrid.moveUp();   
+                } else if (e.getKeyCode() == 39) {
+                    //right
+                    theGameGrid.moveRight(); 
+                } else if (e.getKeyCode() == 40) {
+                    //down
+                    theGameGrid.moveDown(); 
+                } else if (e.getKeyCode() == 37) {
+                    //left
+                    theGameGrid.moveLeft(); 
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        });
     }
     
   
