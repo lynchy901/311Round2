@@ -60,35 +60,33 @@ public class ButtonArray extends JPanel {
     
     public void moveUp() {
         System.out.println("up");
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        
+        if (selectedButton >= 0 && selectedButton < arraySize) {
+            selectedButton += ((arraySize-1) * arraySize);
+        } else {
+            selectedButton -= arraySize;
+        }
+        buttonArray.get(selectedButton).setBackground(Color.yellow);
         
     }
     
     public void moveRight() {
         System.out.println("right");
-
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        
         for (int i = 0; i < arraySize; i++) {
             if (selectedButton == (arraySize-1) + arraySize*i) {
-                if (selectedButton == (arraySize-1) + arraySize*(arraySize-1)) {
                     
-                    buttonArray.get(selectedButton).setBackground(testButton.getBackground());
-                    selectedButton = 0;
+                    selectedButton = selectedButton - (arraySize-1);                
                     flag = true;
                     break;
-                } else {
-                    //System.out.println("the current position is " + selectedButton);
-                    buttonArray.get(selectedButton).setBackground(testButton.getBackground());
-                    selectedButton = arraySize* (i+1);
-                    //System.out.println("Move the selection to " + selectedButton);                
-                    flag = true;
-                    break;
-                }
+                
             }      
         }
         if (flag == false) {
             
-            buttonArray.get(selectedButton).setBackground(testButton.getBackground());
-            selectedButton += 1;
-           //buttonArray.get(selectedButton).setBackground(Color.yellow);    
+            selectedButton += 1;  
         } 
         flag = false;
         buttonArray.get(selectedButton).setBackground(Color.yellow);
@@ -96,10 +94,37 @@ public class ButtonArray extends JPanel {
     
     public void moveLeft() {
         System.out.println("left");
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        
+        for (int i = 0; i < arraySize; i++) {
+            if (selectedButton == arraySize*i) {
+                    
+                    selectedButton = selectedButton + (arraySize-1);                
+                    flag = true;
+                    break;
+                
+            }      
+        }
+        if (flag == false) {
+            
+            selectedButton -= 1;  
+        } 
+        flag = false;
+        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        
     }
     
     public void moveDown() {
         System.out.println("down");
+        
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        
+        if (selectedButton >= (arraySize*(arraySize-1)) && selectedButton < (arraySize*(arraySize-1)) + (arraySize)) {
+            selectedButton -= ((arraySize-1) * arraySize);
+        } else {
+            selectedButton += arraySize;
+        }
+        buttonArray.get(selectedButton).setBackground(Color.yellow);
     }
    
     
