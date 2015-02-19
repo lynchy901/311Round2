@@ -106,6 +106,8 @@ public class MainFrame extends JFrame
                 } else if (e.getKeyCode() == 37) {
                     //left
                     theGameGrid.moveLeft(); 
+                } else if (e.getKeyCode() == 32) {
+                    theGameGrid.selectCell();
                 }
             }
 

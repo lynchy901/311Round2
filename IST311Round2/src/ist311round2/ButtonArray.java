@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,6 +36,7 @@ public class ButtonArray extends JPanel {
         this.setPreferredSize(new Dimension(900, 900));
         this.setSize(900, 900);
         
+        //this generates button array
         if (arraySize > 0 ) {
             for (int i = 0; i < (arraySize*arraySize); i++) {
                 buttonArray.add(createButton(i));
@@ -47,33 +50,35 @@ public class ButtonArray extends JPanel {
     }
     
     public void initComponents() {
-        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        selectButton();
         
         
         
     }
     
     public JButton createButton(int x) {
-        JButton tmpJButton = new JButton(x + " ");
+        int value;
+        value = (int)((Math.random())* 100 + 1);
+        JButton tmpJButton = new JButton(value + "");
         return tmpJButton;
     }
     
     public void moveUp() {
         System.out.println("up");
-        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        neutralizeButton();
         
         if (selectedButton >= 0 && selectedButton < arraySize) {
             selectedButton += ((arraySize-1) * arraySize);
         } else {
             selectedButton -= arraySize;
         }
-        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        selectButton();
         
     }
     
     public void moveRight() {
         System.out.println("right");
-        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        neutralizeButton();
         
         for (int i = 0; i < arraySize; i++) {
             if (selectedButton == (arraySize-1) + arraySize*i) {
@@ -89,12 +94,12 @@ public class ButtonArray extends JPanel {
             selectedButton += 1;  
         } 
         flag = false;
-        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        selectButton();
     }
     
     public void moveLeft() {
         System.out.println("left");
-        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        neutralizeButton();
         
         for (int i = 0; i < arraySize; i++) {
             if (selectedButton == arraySize*i) {
@@ -110,21 +115,55 @@ public class ButtonArray extends JPanel {
             selectedButton -= 1;  
         } 
         flag = false;
-        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        selectButton();
         
     }
     
     public void moveDown() {
         System.out.println("down");
         
-        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+        neutralizeButton();
         
         if (selectedButton >= (arraySize*(arraySize-1)) && selectedButton < (arraySize*(arraySize-1)) + (arraySize)) {
             selectedButton -= ((arraySize-1) * arraySize);
         } else {
             selectedButton += arraySize;
         }
-        buttonArray.get(selectedButton).setBackground(Color.yellow);
+        selectButton();
+    }
+    
+    public void selectCell() {
+        Border correctBorder = new LineBorder(Color.GREEN, 12);
+        Border incorrectBorder = new LineBorder(Color.RED, 12);
+        
+        int currNum = Integer.parseInt(buttonArray.get(selectedButton).getText());
+        boolean prime = true;
+        
+        if (currNum == 1 || currNum == 2) {
+        
+        }else{
+   
+            for (int i = 2; i < currNum; i++) {
+                if (currNum % i == 0) {
+                    prime = false;
+                }
+            }
+        }
+        
+        if (prime == false) {
+            buttonArray.get(selectedButton).setBorder(incorrectBorder);
+        } else {
+            buttonArray.get(selectedButton).setBorder(correctBorder);
+        }
+        
+    }
+    
+    public void neutralizeButton() {
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+    }
+    
+    public void selectButton() {
+        buttonArray.get(selectedButton).setBackground(Color.YELLOW);
     }
    
     
