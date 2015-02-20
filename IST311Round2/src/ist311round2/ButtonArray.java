@@ -26,9 +26,11 @@ public class ButtonArray extends JPanel {
     int selectedButton = 0;
     int arraySize;
     boolean flag = false;
+    MainFrame parentMainFrame;
     JButton testButton = new JButton();
     
-    public ButtonArray(int arraySize) {
+    public ButtonArray(int arraySize, MainFrame parentMainFrame) {
+        this.parentMainFrame = parentMainFrame;
         this.arraySize = arraySize;
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -141,7 +143,7 @@ public class ButtonArray extends JPanel {
         
         if (currNum == 1 || currNum == 2) {
         
-        }else{
+        } else {
    
             for (int i = 2; i < currNum; i++) {
                 if (currNum % i == 0) {
@@ -152,8 +154,12 @@ public class ButtonArray extends JPanel {
         
         if (prime == false) {
             buttonArray.get(selectedButton).setBorder(incorrectBorder);
+            
+                // need to check if button already has a border before adding scores. Consider making an array?
+                parentMainFrame.getGamePanelControl().setScore(-5);
         } else {
             buttonArray.get(selectedButton).setBorder(correctBorder);
+                parentMainFrame.getGamePanelControl().setScore(5);
         }
         
     }

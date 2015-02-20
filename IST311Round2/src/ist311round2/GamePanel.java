@@ -16,6 +16,9 @@ public class GamePanel extends JPanel {
     
     private MainFrame parentMainFrame;
     JButton stopButton = new JButton("Stop");
+    JLabel scoreLabel = new JLabel("Score: ");
+    JLabel score = new JLabel("0");
+    private int currScore = 0;
     
     public GamePanel(MainFrame newMainFrame) {
         parentMainFrame = newMainFrame;
@@ -26,5 +29,13 @@ public class GamePanel extends JPanel {
     public void initComponents() {
         this.setVisible(true);
         this.add(stopButton);
+        this.add(scoreLabel);
+        this.add(score);
+        
+    }
+    
+    public void setScore(int scoreChange) {
+        this.currScore += scoreChange;
+        score.setText(currScore + "");
     }
 }

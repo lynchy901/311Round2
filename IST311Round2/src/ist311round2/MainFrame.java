@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame
 {
     SplashPanel theSplashUI;
+    GamePanel theGamePanel;
     
     public MainFrame()
     {
@@ -56,31 +57,35 @@ public class MainFrame extends JFrame
     }
     
     public void showGameUI() {
-        GamePanel theGamePanel = new GamePanel(this);
+        theGamePanel = new GamePanel(this);
         this.getContentPane().add(theGamePanel, "North");
         pack();
+    }
+    
+    public GamePanel getGamePanelControl() {
+        return theGamePanel;
     }
     
     public void showGameGrid(String grid) {
         int gridSize = 0;
         
-        if (grid == "4x4" ) {
+        if (grid.equals("4x4")) {
             gridSize = 4;
-        } else if (grid == "5x5") {
+        } else if (grid.equals("5x5")) {
             gridSize = 5;
-        } else if (grid == "6x6") {
+        } else if (grid.equals("6x6")) {
             gridSize = 6;
-        } else if (grid == "7x7") {
+        } else if (grid.equals("7x7")) {
             gridSize = 7;
-        } else if (grid == "8x8") {
+        } else if (grid.equals("8x8")) {
             gridSize = 8;
-        } else if (grid == "9x9") {
+        } else if (grid.equals("9x9")) {
             gridSize = 9;
-        } else if (grid == "10x10") {
+        } else if (grid.equals("10x10")) {
             gridSize = 10;
         }
         
-        ButtonArray theGameGrid = new ButtonArray(gridSize);
+        ButtonArray theGameGrid = new ButtonArray(gridSize, this);
         this.getContentPane().add(theGameGrid);
         this.setSize(900, 900);
         this.setLocationRelativeTo(null);
