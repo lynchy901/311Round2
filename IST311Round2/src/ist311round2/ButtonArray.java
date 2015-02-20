@@ -135,8 +135,10 @@ public class ButtonArray extends JPanel {
     }
     
     public void selectCell() {
-        Border correctBorder = new LineBorder(Color.GREEN, 12);
-        Border incorrectBorder = new LineBorder(Color.RED, 12);
+        LineBorder correctBorder = new LineBorder(Color.GREEN, 12);
+        LineBorder incorrectBorder = new LineBorder(Color.RED, 12);
+
+ 
         
         int currNum = Integer.parseInt(buttonArray.get(selectedButton).getText());
         boolean prime = true;
@@ -153,13 +155,20 @@ public class ButtonArray extends JPanel {
         }
         
         if (prime == false) {
-            buttonArray.get(selectedButton).setBorder(incorrectBorder);
             
-                // need to check if button already has a border before adding scores. Consider making an array?
+            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
+                
                 parentMainFrame.getGamePanelControl().setScore(-5);
+            }
+            buttonArray.get(selectedButton).setBorder(incorrectBorder);
+                
         } else {
-            buttonArray.get(selectedButton).setBorder(correctBorder);
+            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
+                
                 parentMainFrame.getGamePanelControl().setScore(5);
+                //System.out.println(((LineBorder)buttonArray.get(selectedButton).getBorder()).getLineColor().equals(Color.RED));
+            }
+            buttonArray.get(selectedButton).setBorder(correctBorder);
         }
         
     }
