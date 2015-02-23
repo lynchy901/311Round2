@@ -43,6 +43,8 @@ public class ButtonArray extends JPanel {
             for (int i = 0; i < (arraySize*arraySize); i++) {
                 buttonArray.add(createButton(i));
                 this.add(buttonArray.get(i));
+                //this.buttonArray.get(i).setEnabled(false);
+                this.buttonArray.get(i).setFocusable(false);
             }
         }
         this.setVisible(true);

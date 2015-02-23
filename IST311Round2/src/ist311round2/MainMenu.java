@@ -49,10 +49,10 @@ public class MainMenu extends JPanel {
         repaint();
         
         startButton.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        theStartButtonActionPerformed(evt);
-                    }
-                });
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theStartButtonActionPerformed(evt);
+            }
+        });
     }
     
     

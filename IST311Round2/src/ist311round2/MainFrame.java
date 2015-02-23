@@ -19,6 +19,7 @@ public class MainFrame extends JFrame
 {
     SplashPanel theSplashUI;
     GamePanel theGamePanel;
+    ButtonArray theGameGrid;
     
     public MainFrame()
     {
@@ -85,7 +86,7 @@ public class MainFrame extends JFrame
             gridSize = 10;
         }
         
-        ButtonArray theGameGrid = new ButtonArray(gridSize, this);
+        theGameGrid = new ButtonArray(gridSize, this);
         this.getContentPane().add(theGameGrid);
         this.setSize(900, 900);
         this.setLocationRelativeTo(null);
@@ -103,13 +104,13 @@ public class MainFrame extends JFrame
                 //up
                  theGameGrid.moveUp();   
                 } else if (e.getKeyCode() == 39) {
-                    //right
+                 //right
                     theGameGrid.moveRight(); 
                 } else if (e.getKeyCode() == 40) {
-                    //down
+                //down
                     theGameGrid.moveDown(); 
                 } else if (e.getKeyCode() == 37) {
-                    //left
+                //left
                     theGameGrid.moveLeft(); 
                 } else if (e.getKeyCode() == 32) {
                     theGameGrid.selectCell();
