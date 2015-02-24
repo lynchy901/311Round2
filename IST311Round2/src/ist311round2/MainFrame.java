@@ -15,17 +15,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 public class MainFrame extends JFrame
 {
     SplashPanel theSplashUI;
     GamePanel theGamePanel;
     ButtonArray theGameGrid;
+    MainMenu theMainMenu;
     
     public MainFrame()
     {
         showSplashUI();
         showMainMenuUI(); 
+        initComponents();
         
+    }
+    
+    public void initComponents() {
     }
     
     public void showSplashUI() {
@@ -38,10 +44,11 @@ public class MainFrame extends JFrame
         this.setSize(450, 350);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setVisible(true);
         
         try {
-            Thread.sleep(4000);                 //1000 milliseconds is one second.
+            Thread.sleep(000);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -52,12 +59,18 @@ public class MainFrame extends JFrame
     }
     
     public void showMainMenuUI() {
+        if (theMainMenu != null) {
+            this.getContentPane().remove(theMainMenu);
+        }
         MainMenu theMainMenu = new MainMenu(this);
         this.getContentPane().add(theMainMenu);
         pack();
     }
     
     public void showGameUI() {
+        if (theGamePanel != null) {
+            this.getContentPane().remove(theGamePanel);
+        }
         theGamePanel = new GamePanel(this);
         this.getContentPane().add(theGamePanel, "North");
         pack();
@@ -67,26 +80,22 @@ public class MainFrame extends JFrame
         return theGamePanel;
     }
     
-    public void showGameGrid(String grid) {
+    public void showGameGrid(String difficulty) {
         int gridSize = 0;
         
-        if (grid.equals("4x4")) {
+        if (difficulty.equals("Easy")) {
             gridSize = 4;
-        } else if (grid.equals("5x5")) {
-            gridSize = 5;
-        } else if (grid.equals("6x6")) {
-            gridSize = 6;
-        } else if (grid.equals("7x7")) {
+        } else if (difficulty.equals("Medium")) {
             gridSize = 7;
-        } else if (grid.equals("8x8")) {
-            gridSize = 8;
-        } else if (grid.equals("9x9")) {
-            gridSize = 9;
-        } else if (grid.equals("10x10")) {
+        } else if (difficulty.equals("Hard")) {
             gridSize = 10;
         }
         
         theGameGrid = new ButtonArray(gridSize, this);
+        
+        while (theGameGrid.getPrimeSelections() == 0) {
+            theGameGrid = new ButtonArray(gridSize, this);
+        } 
         this.getContentPane().add(theGameGrid);
         this.setSize(900, 900);
         this.setLocationRelativeTo(null);
@@ -98,24 +107,28 @@ public class MainFrame extends JFrame
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == 38) {
-                //up
-                 theGameGrid.moveUp();   
-                } else if (e.getKeyCode() == 39) {
-                 //right
-                    theGameGrid.moveRight(); 
-                } else if (e.getKeyCode() == 40) {
-                //down
-                    theGameGrid.moveDown(); 
-                } else if (e.getKeyCode() == 37) {
-                //left
-                    theGameGrid.moveLeft(); 
-                } else if (e.getKeyCode() == 32) {
-                    theGameGrid.selectCell();
-                }
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (!theGamePanel.timer.isRunning()) {
+                theGamePanel.timer.start();
             }
+            if (e.getKeyCode() == 38) {
+            //up
+                theGameGrid.moveUp();   
+            } else if (e.getKeyCode() == 39) {
+                //right
+                theGameGrid.moveRight(); 
+                System.out.println("test");
+            } else if (e.getKeyCode() == 40) {
+                //down
+                theGameGrid.moveDown(); 
+            } else if (e.getKeyCode() == 37) {
+                //left
+                theGameGrid.moveLeft(); 
+            } else if (e.getKeyCode() == 32) {
+                theGameGrid.selectCell();
+            }
+        }
 
             @Override
             public void keyReleased(KeyEvent e) {

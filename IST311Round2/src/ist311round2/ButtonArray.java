@@ -2,13 +2,18 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,11 +28,14 @@ import javax.swing.border.LineBorder;
 public class ButtonArray extends JPanel {
     
     private ArrayList<JButton> buttonArray = new ArrayList<JButton>();
+    private int primeSelections = 0;
     int selectedButton = 0;
     int arraySize;
     boolean flag = false;
+    JLabel instructionLabel = new JLabel("Select as many prime numbers as you can before the time runs out!");
     MainFrame parentMainFrame;
     JButton testButton = new JButton();
+    
     
     public ButtonArray(int arraySize, MainFrame parentMainFrame) {
         this.parentMainFrame = parentMainFrame;
@@ -43,8 +51,10 @@ public class ButtonArray extends JPanel {
             for (int i = 0; i < (arraySize*arraySize); i++) {
                 buttonArray.add(createButton(i));
                 this.add(buttonArray.get(i));
-                //this.buttonArray.get(i).setEnabled(false);
                 this.buttonArray.get(i).setFocusable(false);
+            }
+            if (primeSelections == 0) {
+                
             }
         }
         this.setVisible(true);
@@ -60,10 +70,20 @@ public class ButtonArray extends JPanel {
         
     }
     
+    
+    
     public JButton createButton(int x) {
         int value;
         value = (int)((Math.random())* 100 + 1);
+        
+        if (checkPrime(value)) {
+            primeSelections++;
+        }
+        
         JButton tmpJButton = new JButton(value + "");
+        
+        
+        
         return tmpJButton;
     }
     
@@ -139,10 +159,42 @@ public class ButtonArray extends JPanel {
     public void selectCell() {
         LineBorder correctBorder = new LineBorder(Color.GREEN, 12);
         LineBorder incorrectBorder = new LineBorder(Color.RED, 12);
-
- 
-        
         int currNum = Integer.parseInt(buttonArray.get(selectedButton).getText());
+        
+        if (!checkPrime(currNum)) {
+            
+            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
+                
+                parentMainFrame.getGamePanelControl().setScore(-5);
+            }
+            buttonArray.get(selectedButton).setBorder(incorrectBorder);
+                
+        } else {
+            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
+                
+                parentMainFrame.getGamePanelControl().setScore(5);
+                
+                if (primeSelections != 0) {
+                    primeSelections--;
+                }
+            }
+            buttonArray.get(selectedButton).setBorder(correctBorder);
+            checkWin();
+        } 
+        
+    }
+    
+    public void neutralizeButton() {
+        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+    }
+    
+    public void selectButton() {
+        buttonArray.get(selectedButton).setBackground(Color.YELLOW);
+    }
+   
+    public boolean checkPrime(int currNum) {
+        
+        
         boolean prime = true;
         
         if (currNum == 1 || currNum == 2) {
@@ -155,34 +207,34 @@ public class ButtonArray extends JPanel {
                 }
             }
         }
-        
-        if (prime == false) {
+        return prime;
+    }
+      
+    public void checkWin() {
+        if (primeSelections == 0 || parentMainFrame.theGamePanel.time <= 0) {
+            parentMainFrame.theGamePanel.timer.stop();
+            if (primeSelections == 0) { 
             
-            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
+                JOptionPane.showMessageDialog(this, "Game Over! Your score is: " + parentMainFrame.theGamePanel.score.getText());  
                 
-                parentMainFrame.getGamePanelControl().setScore(-5);
-            }
-            buttonArray.get(selectedButton).setBorder(incorrectBorder);
-                
-        } else {
-            if (buttonArray.get(selectedButton).getBorder().equals(testButton.getBorder()) ) {
-                
-                parentMainFrame.getGamePanelControl().setScore(5);
-                //System.out.println(((LineBorder)buttonArray.get(selectedButton).getBorder()).getLineColor().equals(Color.RED));
-            }
-            buttonArray.get(selectedButton).setBorder(correctBorder);
+           } else {
+               
+               JOptionPane.showMessageDialog(this, "Time is up, your score is: " + parentMainFrame.theGamePanel.score.getText());
+               
+           }
+            
+            parentMainFrame.theGameGrid.setVisible(false);
+            parentMainFrame.theGamePanel.setVisible(false);
+            selectedButton = 0;
+            System.exit(0);
+            
         }
-        
     }
     
-    public void neutralizeButton() {
-        buttonArray.get(selectedButton).setBackground(testButton.getBackground());
+    public int getPrimeSelections() {
+        return primeSelections;
     }
-    
-    public void selectButton() {
-        buttonArray.get(selectedButton).setBackground(Color.YELLOW);
-    }
-   
-    
+
+
 
 }

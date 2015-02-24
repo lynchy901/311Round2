@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.util.Timer;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,15 +15,17 @@ import java.util.Timer;
  *
  * @author nml5182
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements ActionListener {
     
     private MainFrame parentMainFrame;
     JButton stopButton = new JButton("Stop");
     JLabel scoreLabel = new JLabel("Score: ");
     JLabel score = new JLabel("0");
     JLabel timerLabel = new JLabel();
-    int time = 90;
+    JLabel instructionLabel = new JLabel("       Choose as many prime numbers as you can before the time runs out! Press any key to begin");
+    int time = 30;
     private int currScore = 0;
+    Timer timer;
     
     public GamePanel(MainFrame newMainFrame) {
         parentMainFrame = newMainFrame;
@@ -36,31 +38,27 @@ public class GamePanel extends JPanel {
         this.add(stopButton);
         this.add(scoreLabel);
         this.add(score);
-        this.add(timerLabel);        
+        this.add(timerLabel);
+        this.add(instructionLabel);
+        timerLabel.setText("    Time: " + time);
+        timer = new Timer(1000, this);
         
         stopButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theStopButtonActionPerformed(evt);
             }
         });
+    }
+    
+    public void actionPerformed(ActionEvent event) {
+        Object obj = event.getSource();
         
-        ActionListener listener = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (time >= 0 ) {
-                    
-                    time -= 1;
-                    timerLabel.setText(time + "");
-                
-                }
-            }
+        if (obj == timer) {
+            time--;
+            timerLabel.setText("    Time: " + time);
+            parentMainFrame.theGameGrid.checkWin();
+        }
             
-        };
-        
-        //Timer timer = new Timer(1000, listener);
-        //timer.start();
-        
     }
     
     public void theStopButtonActionPerformed(java.awt.event.ActionEvent evt) {

@@ -21,10 +21,9 @@ public class MainMenu extends JPanel {
   
     //start game button,
     private JButton startButton;
+    private JButton quitButton;
     private JComboBox difficulty;
-    private JComboBox gridSize;
     private JLabel picture;
-    private String[] gridOption = {"4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"};
     private String[] difficulties = {"Easy", "Medium", "Hard"};
     private MainFrame parentMainFrame;
     
@@ -38,13 +37,17 @@ public class MainMenu extends JPanel {
     public void initComponents() {
         //this.setLayout(new GridLayout(2, 0));
         startButton = new JButton("Start");
+        quitButton = new JButton("Quit");
         difficulty = new JComboBox(difficulties);
-        gridSize = new JComboBox(gridOption);
         this.add(startButton);
         this.add(difficulty);
-        this.add(gridSize);
+        this.add(quitButton);
+        startButton.setPreferredSize(new Dimension(200, 100));
+        difficulty.setPreferredSize(new Dimension(200, 100));
+        quitButton.setPreferredSize(new Dimension(200, 100));
+        ((JLabel)difficulty.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
         this.setLocation(0, 0);
-        this.setPreferredSize(new Dimension(200, 200));
+        this.setPreferredSize(new Dimension(250, 320));
         revalidate();
         repaint();
         
@@ -53,13 +56,23 @@ public class MainMenu extends JPanel {
                 theStartButtonActionPerformed(evt);
             }
         });
+        
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theQuitButtonActionPerformed(evt);
+            }
+        });
     }
     
     
     public void theStartButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         parentMainFrame.showGameUI();
-        parentMainFrame.showGameGrid(gridOption[gridSize.getSelectedIndex()]);
+        parentMainFrame.showGameGrid(difficulties[difficulty.getSelectedIndex()]);
         
+    }
+    
+    public void theQuitButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        System.exit(0);
     }
 }
