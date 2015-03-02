@@ -48,7 +48,7 @@ public class MainFrame extends JFrame
         this.setVisible(true);
         
         try {
-            Thread.sleep(000);                 //1000 milliseconds is one second.
+            Thread.sleep(4000);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
